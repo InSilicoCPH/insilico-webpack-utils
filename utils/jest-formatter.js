@@ -21,9 +21,9 @@ function formatter(results) {
   for (let result of results.testResults) {
     if (result.message) {
       output += formatMessage(result.message) + '\n';
-      output += `${FAIL} ${path.relative(__dirname, result.name)}\n`;
+      output += `${FAIL} ${path.relative(process.cwd(), result.name)}\n`;
     } else {
-      output += `${PASS} ${path.relative(__dirname, result.name)}\n`;
+      output += `${PASS} ${path.relative(process.cwd(), result.name)}\n`;
     }
     if (result.summary) {
       output += result.summary + '\n';
