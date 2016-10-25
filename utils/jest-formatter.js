@@ -4,6 +4,11 @@ const path = require('path');
 const PASS = chalk.bgGreen.white.bold(' PASS ');
 const FAIL = chalk.bgRed.white.bold(' FAIL ');
 
+/**
+ * Format Jest JSON output for the console
+ * @param results
+ * @returns {*}
+ */
 function formatter(results) {
   if (!results.numTotalTests) {
     // No tests

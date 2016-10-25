@@ -1,7 +1,12 @@
 const yarnSupport = require('../yarn-support');
+jest.mock('child_process', () => {
+  return {
+    exec: (cmd, cb) => cb(null, '0.16.1'),
+  }
+});
+
 
 it('should get yarn version', () => {
   return yarnSupport()
-    .then(support => expect(typeof support).toBe('string'))
-    .catch(support => expect(support).toBe(null));
+    .then(support => expect(support).toEqual('0.16.1'))
 })

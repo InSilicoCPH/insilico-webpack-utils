@@ -1,6 +1,11 @@
 var gutil = require('gulp-util');
 var notifier = require('node-notifier');
 
+/**
+ * Handle gulp errors
+ * @param err
+ * @param kill
+ */
 module.exports = function(err, kill) {
   if (typeof kill === 'undefined') kill = true;
   err = err || {};

@@ -12,6 +12,9 @@
   "engines": {
     "node": ">=6.0.0"
   },
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "ascii-progress": "^1.0.4",
     "chalk": "^1.1.3",
