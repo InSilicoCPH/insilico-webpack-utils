@@ -1,6 +1,6 @@
 const bin = 'node_modules/.bin/jest';
 
-function jestTask() {
+function jestTask(done) {
   const spawn = require('child_process').spawn;
 
   const testEnv = Object.create( process.env );
@@ -37,7 +37,7 @@ function jestTask() {
     } else {
       args.push('--watch'); // Watch
       spawn(bin, args, {stdio: 'inherit', env: testEnv});
-      done();
+      if (done) done();
     }
   } else {
     return spawn(bin, args, {stdio: 'inherit', env: testEnv});

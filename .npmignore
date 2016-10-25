@@ -1,0 +1,5 @@
+coverage
+.idea
+.tmp
+__tests__
+.travis.yml
