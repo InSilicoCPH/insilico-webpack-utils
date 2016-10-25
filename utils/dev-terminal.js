@@ -2,7 +2,9 @@
  * This is based on dev output from create-react-app
  * https://github.com/facebookincubator/create-react-app/blob/master/packages/react-dev-utils/formatWebpackMessages.js
  */
+const path = require('path');
 const chalk = require('chalk');
+const chokidar = require('chokidar');
 const testFormatter = require('./jest-formatter');
 const esLintFormatter = require('eslint/lib/formatters/stylish.js');
 const postcssFormatter = require('postcss-reporter/lib/formatter')();
@@ -12,6 +14,7 @@ const friendlyTypeErrorLabel = 'Type error:';
 let firstRun = true;
 let firstTestRun = true;
 let isCompiling = false;
+let webpackChanged = false;
 let hasErrors = false;
 let hasWarnings = false;
 let webpackBundler = null;
@@ -19,9 +22,22 @@ let logMessages = [];
 let messages = {};
 let testResult = null;
 let failedTests = false;
+let timeout = -1;
+let newChange = true;
 
 function isLikelyASyntaxError(message) {
   return message.indexOf(friendlySyntaxErrorLabel) !== -1;
+}
+
+function watchForChanges(watch) {
+  var watcher = chokidar.watch(path.join(watch, '/**/*.*'));
+
+  watcher.on('change', (file, stats) => {
+    if (!isCompiling && !firstTestRun && !firstRun) {
+      webpackChanged = false;
+      clearConsole();
+    }
+  });
 }
 
 // This is a little hacky.
@@ -50,7 +66,7 @@ function formatMessage(message) {
     .replace(/\.\/~\/css-loader.+!\.\/(.+)/g, chalk.bold.underline('$1'))
     // Underline the file name
     .replace(/^\.\/(.+)/g, chalk.bold.underline('$1'))
-  ;
+    ;
 }
 
 function clearConsole() {
@@ -64,11 +80,15 @@ function clearMessages(name) {
   }
 }
 
-function setupBundler(bundler) {
+function setupBundler(bundler, opts) {
+  if (opts && opts.watch) {
+    watchForChanges(opts.watch);
+  }
   webpackBundler = bundler;
 
   bundler.plugin('invalid', () => {
     isCompiling = true;
+    webpackChanged = true;
     hasErrors = hasWarnings = false;
     clearConsole();
     console.log('Compiling...');
@@ -140,6 +160,8 @@ function setupBundler(bundler) {
 }
 
 function logOutput() {
+  if (!webpackChanged && !firstTestRun && !firstRun) clearConsole();
+
   if (testResult) {
     outputTestResult();
   }
@@ -194,7 +216,6 @@ function setTestResult(result) {
 
   // Clear the console if not compiling
   if (!isCompiling && !firstTestRun) {
-    //clearConsole();
     logOutput();
   } else if (firstTestRun) {
     firstTestRun = false;
