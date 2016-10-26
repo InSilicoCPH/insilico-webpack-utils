@@ -3,7 +3,9 @@ module.exports = {
     watchMissing: require('./plugins/WatchMissingNodeModulesPlugin')
   },
   tasks: {
-    jest: require('./tasks/jest')
+    eslint: require('./tasks/eslint'),
+    jest: require('./tasks/jest'),
+    stylelint: require('./tasks/stylelint')
   },
   utils: {
     currentBranch: require('./utils/current-branch'),

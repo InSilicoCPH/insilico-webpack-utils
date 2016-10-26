@@ -1,4 +1,3 @@
-const args = require('../args');
 const path = require('path');
 const errorHandler = require('../utils/error-handler');
 const terminal = require('../utils/dev-terminal');
