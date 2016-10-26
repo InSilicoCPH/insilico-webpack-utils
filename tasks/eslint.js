@@ -19,11 +19,7 @@ module.exports = function eslint(src) {
         terminal.clearMessages('ESLint');
       }
 
-      if (path.endsWith('js')) {
-        runEslint(path);
-      } else {
-        runEslint();
-      }
+      runEslint(path);
     });
   }
 

@@ -18,11 +18,7 @@ module.exports = function stylelint(src) {
         terminal.clearMessages('Stylelint');
       }
 
-      if (path.endsWith('css')) {
-        runStylelint(src, path);
-      } else {
-        runStylelint(src);
-      }
+      runStylelint(src, path);
     });
   }
 
