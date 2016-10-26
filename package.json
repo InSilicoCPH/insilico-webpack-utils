@@ -1,6 +1,6 @@
 {
   "name": "insilico-webpack-utils",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "description": "Utils",
   "main": "index.js",
   "author": "Daniel Schmidt",
@@ -20,8 +20,7 @@
     "chokidar": "^1.6.1",
     "gulp-util": "^3.0.7",
     "node-notifier": "^4.6.1",
-    "node-progress": "0.1.0",
-    "object-assign": "^4.1.0",
+    "ora": "0.3.0",
     "postcss-reporter": "^1.4.1",
     "text-table": "0.2.0"
   },

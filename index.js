@@ -1,6 +1,5 @@
 module.exports = {
   plugins: {
-    progressBar: require('./plugins/ProgressBarPlugin'),
     watchMissing: require('./plugins/WatchMissingNodeModulesPlugin')
   },
   tasks: {
@@ -10,6 +9,7 @@ module.exports = {
     currentBranch: require('./utils/current-branch'),
     devTerminal: require('./utils/dev-terminal'),
     errorHandler: require('./utils/error-handler'),
+    status: require('./utils/webpackStatus'),
     yarnSupport: require('./utils/yarn-support'),
   },
 };
