@@ -9,6 +9,7 @@ module.exports = function stylelint(src) {
   //If watch mode, start watching for changes.
   src = src || path.join(process.cwd(), 'src/**/*.css');
   const isWatching = process.env.WATCHING === 'true';
+  const gulp = require('gulp');
 
   if (isWatching) {
     const watcher = gulp.watch(src);
@@ -18,19 +19,18 @@ module.exports = function stylelint(src) {
       }
 
       if (path.endsWith('css')) {
-        runStylelint(path);
+        runStylelint(src, path);
       } else {
-        runStylelint();
+        runStylelint(src);
       }
     });
   }
 
-  return runStylelint();
+  return runStylelint(src);
 };
 
 function runStylelint(src, file) {
   const gulp = require('gulp');
-  const plumber = require('gulp-plumber');
   const postcss = require('gulp-postcss');
   const isBundling = terminal.hasBundler();
   const isWatching = process.env.WATCHING === 'true';

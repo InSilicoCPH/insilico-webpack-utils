@@ -1,3 +1,4 @@
+const gulp = require('gulp');
 const path = require('path');
 const errorHandler = require('../utils/error-handler');
 const terminal = require('../utils/dev-terminal');
@@ -9,6 +10,7 @@ module.exports = function eslint(src) {
   //If watch mode, start watching for changes.
   src = src || path.join(process.cwd(), 'src/**/*.js');
   const isWatching = process.env.WATCHING === 'true';
+  const gulp = require('gulp');
 
   if (isWatching) {
     const watcher = gulp.watch(src);
