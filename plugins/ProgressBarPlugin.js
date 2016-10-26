@@ -16,7 +16,7 @@ module.exports = function ProgressBarPlugin(options) {
   var objectAssign = require('object-assign');
   var chalk = require('chalk');
   var webpack = require('webpack');
-  var ProgressBar = require('ascii-progress');
+  var ProgressBar = require('node-progress');
 
   var preamble = chalk.cyan.bold(options.preamble || 'Building ' + (options.name ? ':name ' : ''));
   //var bar = chalk.bold('[') + ':bar' + chalk.bold(']');
@@ -38,7 +38,7 @@ module.exports = function ProgressBarPlugin(options) {
     var newPercent = Math.floor(percent * 100);
 
     if (bar && newPercent != lastPercent ) {
-      bar.update(percent, {
+      bar.tick(percent, {
         msg: msg,
         name: options.name,
       });
