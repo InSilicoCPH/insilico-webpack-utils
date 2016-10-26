@@ -5,8 +5,8 @@
 const path = require('path');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
-const testFormatter = require('./jest-formatter');
-const esLintFormatter = require('eslint/lib/formatters/stylish.js');
+const testFormatter = require('./formatters/jest-formatter');
+const esLintFormatter = require('./formatters/stylish.js');
 const postcssFormatter = require('postcss-reporter/lib/formatter')();
 const friendlySyntaxErrorLabel = 'Syntax error:';
 const friendlyTypeErrorLabel = 'Type error:';
@@ -22,8 +22,6 @@ let logMessages = [];
 let messages = {};
 let testResult = null;
 let failedTests = false;
-let timeout = -1;
-let newChange = true;
 
 function isLikelyASyntaxError(message) {
   return message.indexOf(friendlySyntaxErrorLabel) !== -1;
