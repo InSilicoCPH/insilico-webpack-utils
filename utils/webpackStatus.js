@@ -1,7 +1,7 @@
 /**
  * Display a status bar when bundling Webpack
  * @param webpackCompiler
- * @returns {*}
+ * @returns spinner
  */
 module.exports = function webpackStatus(webpackCompiler) {
   var stream = process.stderr;
@@ -25,4 +25,6 @@ module.exports = function webpackStatus(webpackCompiler) {
       spinner.text = msg;
     }
   }));
+
+  return spinner;
 };
