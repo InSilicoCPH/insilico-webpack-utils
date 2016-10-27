@@ -1,7 +1,7 @@
 const utils = require('../');
 
 it('should export utils', () => {
-  expect(utils.plugins).toBeDefined();
-  expect(utils.utils).toBeDefined();
-  expect(utils.tasks).toBeDefined();
+  expect(utils.devTerminal).toBeDefined();
+  expect(utils.errorHandler).toBeDefined();
+  expect(utils.status).toBeDefined();
 });
