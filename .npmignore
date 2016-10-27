@@ -3,3 +3,5 @@ coverage
 .tmp
 __tests__
 .travis.yml
+*.test.js
+test-src
