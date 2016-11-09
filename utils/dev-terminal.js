@@ -79,6 +79,7 @@ function clearMessages(name) {
 }
 
 function setupBundler(bundler, opts) {
+  console.log(opts)
   if (opts && opts.watch) {
     watchForChanges(opts.watch);
   }
