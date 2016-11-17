@@ -12,12 +12,13 @@ const friendlySyntaxErrorLabel = 'Syntax error:';
 const friendlyTypeErrorLabel = 'Type error:';
 
 let firstRun = true;
-let firstTestRun = true;
+let firstTestRun = false;
 let isCompiling = false;
 let webpackChanged = false;
 let hasErrors = false;
 let hasWarnings = false;
 let webpackBundler = null;
+let useJest = false;
 let logMessages = [];
 let messages = {};
 let testResult = null;
@@ -208,6 +209,11 @@ function setPostCSSResult(name, results) {
   output(name);
 }
 
+function setIsTesting() {
+  firstRun = true;
+  useJest = true;
+}
+
 function setTestResult(result) {
   testResult = testFormatter(result);
   failedTests = result.numFailedTests > 0;
@@ -240,4 +246,5 @@ module.exports = {
   setESLintResult,
   setPostCSSResult,
   setTestResult,
+  setIsTesting,
 };
