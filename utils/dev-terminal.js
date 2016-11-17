@@ -35,6 +35,11 @@ function watchForChanges(watch) {
     if (!isCompiling && !firstTestRun && !firstRun) {
       webpackChanged = false;
       clearConsole();
+      console.log(
+        `[${chalk.grey(new Date(stats.ctime).toLocaleTimeString('da-DK', {hour12: false}))}]`,
+        'Changed:',
+        chalk.cyan(path.relative(watch, file))
+      )
     }
   });
 }
@@ -89,14 +94,17 @@ function setupBundler(bundler, opts) {
     isCompiling = true;
     webpackChanged = true;
     hasErrors = hasWarnings = false;
-    clearConsole();
     console.log('Compiling...');
   });
 
   bundler.plugin('done', (stats) => {
+    var dontClear = false;
     if (!firstRun) {
       clearConsole();
-    } else firstRun = false;
+    } else {
+      dontClear = true;
+      firstRun = false;
+    }
 
     isCompiling = false;
     hasErrors = stats.hasErrors();
@@ -106,7 +114,7 @@ function setupBundler(bundler, opts) {
       const time = `${stats.endTime - stats.startTime} ms`;
       console.log(`${chalk.green('Compiled successfully!')} ${chalk.grey('in ' + time)}`);
 
-      logOutput();
+      logOutput(dontClear);
 
       messages = {};
       testResult = null;
@@ -158,8 +166,8 @@ function setupBundler(bundler, opts) {
   });
 }
 
-function logOutput() {
-  if (!webpackChanged && !firstTestRun && !firstRun) clearConsole();
+function logOutput(dontClear) {
+  if (!webpackChanged && !firstTestRun && !firstRun && !dontClear) clearConsole();
 
   if (testResult) {
     outputTestResult();
@@ -210,7 +218,7 @@ function setPostCSSResult(name, results) {
 }
 
 function setIsTesting() {
-  firstRun = true;
+  firstTestRun = true;
   useJest = true;
 }
 
