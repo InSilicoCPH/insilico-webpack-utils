@@ -35,11 +35,13 @@ function watchForChanges(watch) {
     if (!isCompiling && !firstTestRun && !firstRun) {
       webpackChanged = false;
       clearConsole();
-      console.log(
-        `[${chalk.grey(new Date(stats.ctime).toLocaleTimeString('da-DK', {hour12: false}))}]`,
-        'Changed:',
-        chalk.cyan(path.relative(watch, file))
-      )
+      if (stats) {
+        console.log(
+          `[${chalk.grey(new Date(stats.ctime).toLocaleTimeString('da-DK', {hour12: false}))}]`,
+          'Changed:',
+          chalk.cyan(path.relative(watch, file))
+        )
+      }
     }
   });
 }
