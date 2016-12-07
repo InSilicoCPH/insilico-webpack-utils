@@ -29,12 +29,12 @@
     "node-notifier": "^4.6.1",
     "ora": "^0.3.0",
     "postcss-reporter": "^2.0.0",
-    "stylelint": "^7.5.0",
+    "stylelint": "^7.6.0",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
     "jest": "17.0.3",
-    "webpack": "^1.13.2"
+    "webpack": "^1.14.0"
   },
   "peerDependencies": {
     "webpack": "*"

@@ -29,19 +29,21 @@ function isLikelyASyntaxError(message) {
 }
 
 function watchForChanges(watch) {
-  var watcher = chokidar.watch(path.join(watch, '/**/*.*'));
+  const watcher = chokidar.watch(path.join(watch, '/**/*.*'));
 
   watcher.on('change', (file, stats) => {
     if (!isCompiling && !firstTestRun && !firstRun) {
       webpackChanged = false;
       clearConsole();
+      const log = [
+        'Changed:',
+        chalk.cyan(path.relative(watch, file))
+      ];
+
       if (stats) {
-        console.log(
-          `[${chalk.grey(new Date(stats.ctime).toLocaleTimeString('da-DK', {hour12: false}))}]`,
-          'Changed:',
-          chalk.cyan(path.relative(watch, file))
-        )
+        log.unshift(chalk.grey(new Date(stats.ctime).toLocaleTimeString('da-DK', {hour12: false})));
       }
+      console.log(log.join(' '))
     }
   });
 }
