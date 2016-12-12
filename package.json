@@ -29,6 +29,7 @@
     "node-notifier": "^4.6.1",
     "ora": "^0.3.0",
     "postcss-reporter": "^2.0.0",
+    "react-dev-utils": "0.4.2",
     "stylelint": "^7.6.0",
     "text-table": "^0.2.0"
   },

@@ -5,11 +5,11 @@
 const path = require('path');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
+const clearConsole = require('react-dev-utils/clearConsole');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const testFormatter = require('./formatters/jest-formatter');
 const esLintFormatter = require('./formatters/stylish.js');
 const postcssFormatter = require('postcss-reporter/lib/formatter')();
-const friendlySyntaxErrorLabel = 'Syntax error:';
-const friendlyTypeErrorLabel = 'Type error:';
 
 let firstRun = true;
 let firstTestRun = false;
@@ -24,10 +24,6 @@ let messages = {};
 let testResult = null;
 let failedTests = false;
 
-function isLikelyASyntaxError(message) {
-  return message.indexOf(friendlySyntaxErrorLabel) !== -1;
-}
-
 function watchForChanges(watch) {
   const watcher = chokidar.watch(path.join(watch, '/**/*.*'));
 
@@ -35,6 +31,8 @@ function watchForChanges(watch) {
     if (!isCompiling && !firstTestRun && !firstRun) {
       webpackChanged = false;
       clearConsole();
+      clearMessages();
+
       const log = [
         'Changed:',
         chalk.cyan(path.relative(watch, file))
@@ -46,39 +44,6 @@ function watchForChanges(watch) {
       console.log(log.join(' '))
     }
   });
-}
-
-// This is a little hacky.
-// It would be easier if webpack provided a rich error object.
-function formatMessage(message) {
-  return message
-  // Make some common errors shorter:
-    .replace(
-      // Babel syntax error
-      'Module build failed: SyntaxError:',
-      friendlySyntaxErrorLabel
-    )
-    .replace(
-      // Babel syntax error
-      'Module build failed: TypeError::',
-      friendlyTypeErrorLabel
-    )
-    .replace(
-      // Webpack file not found error
-      /Module not found: Error: Cannot resolve 'file' or 'directory'/,
-      'Module not found:'
-    )
-    // Internal stacks are generally useless so we strip them
-    .replace(/^\s*at\s.*:\d+:\d+[\s\)]*\n/gm, '') // at ... ...:x:y
-    // Webpack loader names obscure CSS filenames
-    .replace(/\.\/~\/css-loader.+!\.\/(.+)/g, chalk.bold.underline('$1'))
-    // Underline the file name
-    .replace(/^\.\/(.+)/g, chalk.bold.underline('$1'))
-    ;
-}
-
-function clearConsole() {
-  process.stdout.write('\x1bc');
 }
 
 function clearMessages(name) {
@@ -120,36 +85,23 @@ function setupBundler(bundler, opts) {
 
       logOutput(dontClear);
 
-      messages = {};
+      clearMessages();
       testResult = null;
       return;
     } else {
       logMessages.length = 0;
-      messages = {};
+      clearMessages();
     }
 
     // Use false as param, since the stats object will still contain errors/warnings - Also fixes issues with duplicate errors.
-    const json = stats.toJson(false);
+    const rawMessages = stats.toJson({}, false);
+    const webpackMessages = formatWebpackMessages(rawMessages);
 
-    var formattedErrors = json.errors.map(message =>
-      'Error in ' + formatMessage(message)
-    );
-    var formattedWarnings = json.warnings.map(message =>
-      'Warning in ' + formatMessage(message)
-    );
 
     if (hasErrors) {
       console.log(chalk.red('Failed to compile.'));
       console.log();
-      if (formattedErrors.some(isLikelyASyntaxError)) {
-        // If there are any syntax errors, show just them.
-        formattedErrors = formattedErrors.filter(isLikelyASyntaxError);
-      }
-      formattedErrors.forEach(message => {
-        console.log(message);
-        console.log();
-      });
-      // If errors exist, ignore warnings.
+      webpackMessages.errors.forEach((message) => console.log(message));
       return;
     }
 
@@ -162,10 +114,7 @@ function setupBundler(bundler, opts) {
     if (hasWarnings) {
       console.log(chalk.yellow('Compiled with warnings.'));
       console.log();
-      formattedWarnings.forEach(message => {
-        console.log(message);
-        console.log();
-      });
+      webpackMessages.warnings.forEach((message) => console.log(message));
     }
   });
 }
@@ -231,7 +180,7 @@ function setTestResult(result) {
   failedTests = result.numFailedTests > 0;
 
   // Clear the console if not compiling
-  if (!isCompiling && !firstTestRun) {
+  if (!isCompiling && !firstTestRun && !hasErrors && !hasWarnings) {
     logOutput();
   } else if (firstTestRun) {
     firstTestRun = false;
