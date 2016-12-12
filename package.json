@@ -1,6 +1,6 @@
 {
   "name": "insilico-webpack-utils",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Utils",
   "main": "index.js",
   "author": "Daniel Schmidt",
