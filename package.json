@@ -28,13 +28,13 @@
     "minimist": "1.2.0",
     "node-notifier": "^4.6.1",
     "ora": "^0.3.0",
-    "postcss-reporter": "^2.0.0",
+    "postcss-reporter": "^3.0.0",
     "react-dev-utils": "0.4.2",
     "stylelint": "^7.6.0",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
-    "jest": "17.0.3",
+    "jest": "18.0.0",
     "webpack": "^1.14.0"
   },
   "peerDependencies": {
