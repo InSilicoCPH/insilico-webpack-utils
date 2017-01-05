@@ -37,7 +37,7 @@ function formatter(results) {
   if (results.numFailedTests) {
     const failureMsg = chalk.red(`${results.numFailedTests} test${results.numFailedTests == 1 ? '' : 's'} failed`);
     output += `${failureMsg} ${passMsg} ${time}`;
-    output += '\n\n' + chalk.bgYellow.black(' Run "npm test" in a new terminal to enter interactive Jest mode ');
+    output += '\n\n' + chalk.bgYellow.black(' Run "yarn test" in a new terminal to enter interactive Jest mode ');
   } else {
     output += `${passMsg} ${time}`;
   }
