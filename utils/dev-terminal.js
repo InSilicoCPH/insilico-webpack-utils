@@ -1,10 +1,14 @@
+/**
+ * This is based on dev output from create-react-app
+ * https://github.com/facebookincubator/create-react-app/blob/master/packages/react-dev-utils/formatWebpackMessages.js
+ */
 const path = require('path');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
-const clearConsole = require('../react-dev-utils/clearConsole');
-const formatWebpackMessages = require('../react-dev-utils/formatWebpackMessages');
-const esLintFormatter = require('../react-dev-utils/eslintFormatter');
-const testFormatter = require('./jest-formatter');
+const clearConsole = require('react-dev-utils/clearConsole');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const testFormatter = require('./formatters/jest-formatter');
+const esLintFormatter = require('./formatters/stylish.js');
 const postcssFormatter = require('postcss-reporter/lib/formatter')();
 
 let firstRun = true;
@@ -71,7 +75,7 @@ function setupBundler(bundler, opts) {
   });
 
   bundler.plugin('done', (stats) => {
-    var dontClear = false;
+    let dontClear = false;
     if (!firstRun) {
       clearConsole();
     } else {
@@ -195,7 +199,7 @@ function setTestResult(result) {
 function formatPostCSS(results) {
   let msg = '';
   if (results) {
-    for (var i = 0; i < results.length; i++) {
+    for (let i = 0; i < results.length; i++) {
       msg += postcssFormatter(results[i]);
     }
   }
