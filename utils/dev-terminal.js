@@ -1,7 +1,3 @@
-/**
- * This is based on dev output from create-react-app
- * https://github.com/facebookincubator/create-react-app/blob/master/packages/react-dev-utils/formatWebpackMessages.js
- */
 const path = require('path');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
@@ -23,6 +19,14 @@ let logMessages = [];
 let messages = {};
 let testResult = null;
 let failedTests = false;
+
+function getStatus() {
+  return {
+    hasErrors: hasErrors,
+    hasWarnings: hasWarnings,
+    isCompiling: isCompiling
+  }
+}
 
 function watchForChanges(watch) {
   const watcher = chokidar.watch(path.join(watch, '/**/*.*'));
@@ -201,6 +205,7 @@ function formatPostCSS(results) {
 
 module.exports = {
   log,
+  getStatus,
   clearMessages,
   hasBundler,
   setupBundler,
