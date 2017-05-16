@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "jest": "^20.0.1",
+    "react-dev-utils": "0.5.2",
     "stylelint": "^7.10.1",
     "webpack": "^2.5.1"
   },
