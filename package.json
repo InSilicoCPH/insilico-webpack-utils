@@ -26,6 +26,7 @@
     "gulp-util": "^3.0.8",
     "jsonfile": "^3.0.0",
     "minimist": "^1.2.0",
+    "react-dev-utils": "^0.5.2",
     "node-notifier": "^5.1.2",
     "ora": "^1.2.0",
     "postcss-reporter": "^3.0.0",
@@ -33,7 +34,6 @@
   },
   "devDependencies": {
     "jest": "^20.0.1",
-    "react-dev-utils": "0.5.2",
     "stylelint": "^7.10.1",
     "webpack": "^2.5.1"
   },
