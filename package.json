@@ -29,11 +29,10 @@
     "node-notifier": "^5.1.2",
     "ora": "^1.2.0",
     "postcss-reporter": "^3.0.0",
-    "react-dev-utils": "^0.5.2",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
-    "jest": "^20.0.0",
+    "jest": "^20.0.1",
     "stylelint": "^7.10.1",
     "webpack": "^2.5.1"
   },

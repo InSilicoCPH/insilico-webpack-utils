@@ -5,10 +5,10 @@
 const path = require('path');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
-const clearConsole = require('react-dev-utils/clearConsole');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const testFormatter = require('./formatters/jest-formatter');
-const esLintFormatter = require('./formatters/stylish.js');
+const clearConsole = require('../react-dev-utils/clearConsole');
+const formatWebpackMessages = require('../react-dev-utils/formatWebpackMessages');
+const esLintFormatter = require('../react-dev-utils/eslintFormatter');
+const testFormatter = require('./jest-formatter');
 const postcssFormatter = require('postcss-reporter/lib/formatter')();
 
 let firstRun = true;
@@ -161,7 +161,7 @@ function log(msg) {
 }
 
 function setESLintResult(results) {
-  messages['ESLint'] = esLintFormatter(results);
+  messages['ESLint'] = results && results.length ? esLintFormatter(results) : null;
   output('ESLint');
 }
 
