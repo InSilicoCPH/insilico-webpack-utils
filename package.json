@@ -1,6 +1,6 @@
 {
   "name": "insilico-webpack-utils",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Utils",
   "main": "index.js",
   "author": "Daniel Schmidt",
@@ -26,10 +26,10 @@
     "gulp-util": "^3.0.8",
     "jsonfile": "^3.0.0",
     "minimist": "^1.2.0",
-    "react-dev-utils": "^0.5.2",
     "node-notifier": "^5.1.2",
     "ora": "^1.2.0",
     "postcss-reporter": "^3.0.0",
+    "react-dev-utils": "^0.5.2",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
