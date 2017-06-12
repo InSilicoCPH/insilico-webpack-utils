@@ -17,6 +17,8 @@ let isCompiling = false;
 let webpackChanged = false;
 let hasErrors = false;
 let hasWarnings = false;
+let hasEslintErrors = false
+let hasEslintWarnings = false
 let webpackBundler = null;
 let useJest = false;
 let logMessages = [];
@@ -26,6 +28,8 @@ let failedTests = false;
 
 function getStatus() {
   return {
+    hasEslintErrors: hasEslintErrors,
+    hasEslintWarnings: hasEslintWarnings,
     hasErrors: hasErrors,
     hasWarnings: hasWarnings,
     isCompiling: isCompiling
@@ -86,7 +90,6 @@ function setupBundler(bundler, opts) {
     isCompiling = false;
     hasErrors = stats.hasErrors();
     hasWarnings = stats.hasWarnings();
-
     if (!hasErrors && !hasWarnings && !failedTests) {
       const time = `${stats.endTime - stats.startTime} ms`;
       console.log(`${chalk.green('Compiled successfully!')} ${chalk.grey('in ' + time)}`);
@@ -170,7 +173,10 @@ function log(msg) {
 
 function setESLintResult(results) {
   messages['ESLint'] = results && results.length ? esLintFormatter(results) : null;
-  output('ESLint');
+  if (results) {
+    hasEslintErrors = results.some(item => item.errorCount > 0)
+    hasEslintWarnings = results.some(item => item.warningCount > 0)
+  }
 }
 
 function setPostCSSResult(name, results) {
