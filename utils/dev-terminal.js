@@ -176,7 +176,10 @@ function setESLintResult(results) {
   if (results) {
     hasEslintErrors = results.some(item => item.errorCount > 0)
     hasEslintWarnings = results.some(item => item.warningCount > 0)
+
+    output('ESLint')
   }
+
 }
 
 function setPostCSSResult(name, results) {
