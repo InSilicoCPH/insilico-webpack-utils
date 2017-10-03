@@ -37,6 +37,6 @@
     "webpack": "^3.5.5"
   },
   "peerDependencies": {
-    "webpack": "*"
+    "webpack": ">=2.0.0"
   }
 }
