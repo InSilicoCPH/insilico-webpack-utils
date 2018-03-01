@@ -1,5 +1,5 @@
-var gutil = require('gulp-util');
-var notifier = require('node-notifier');
+const chalk = require('chalk');
+const notifier = require('node-notifier');
 
 /**
  * Handle gulp errors
@@ -9,7 +9,7 @@ var notifier = require('node-notifier');
 module.exports = function(err, kill) {
   if (typeof kill === 'undefined') kill = true;
   err = err || {};
-  var name = err.name;
+  const name = err.name;
 
   notifier.notify({
     title: name || err.plugin || 'Error',
@@ -20,15 +20,15 @@ module.exports = function(err, kill) {
   /**
    * Stop the stream on error
    */
-  if (kill && !process.env.WATCHING === 'true' && !gutil.env['force']) {
-    throw new gutil.PluginError('Error', err);
+  if (kill && !process.env.WATCHING === 'true') {
+    throw new Error(err.message);
   } else {
     if (name !== 'Error') {
-      console.log(gutil.colors.cyan(name) + ':');
+      console.log(chalk.cyan(name) + ':');
     }
-    console.error(gutil.colors.red(err.message));
+    console.error(chalk.red(err.message));
 
-    if (typeof this.emit != "undefined") {
+    if (typeof this.emit !== "undefined") {
       this.emit('end');
     }
   }
