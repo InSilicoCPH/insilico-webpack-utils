@@ -25,6 +25,7 @@ let logMessages = [];
 let messages = {};
 let testResult = null;
 let failedTests = false;
+let startTime = new Date().getTime();
 
 function getStatus() {
   return {
@@ -75,13 +76,15 @@ function setupBundler(bundler, opts) {
     isCompiling = true;
     webpackChanged = true;
     hasErrors = hasWarnings = false;
-    console.log('Compiling...');
+    //console.log('Compiling...');
+    startTime = new Date().getTime()
   });
 
   bundler.plugin('done', (stats) => {
+    const endTime = new Date().getTime()
     let dontClear = false;
     if (!firstRun) {
-      clearConsole();
+      // clearConsole();
     } else {
       dontClear = true;
       firstRun = false;
@@ -91,7 +94,7 @@ function setupBundler(bundler, opts) {
     hasErrors = stats.hasErrors();
     hasWarnings = stats.hasWarnings();
     if (!hasErrors && !hasWarnings && !failedTests) {
-      const time = `${stats.endTime - stats.startTime} ms`;
+      const time = `${endTime - startTime} ms`;
       console.log(`${chalk.green('Compiled successfully!')} ${chalk.grey('in ' + time)}`);
 
       logOutput(dontClear);
