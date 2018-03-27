@@ -72,7 +72,7 @@ function setupBundler(bundler, opts) {
   }
   webpackBundler = bundler;
 
-  bundler.plugin('invalid', () => {
+  bundler.hooks.invalid.tap('dev-terminal', () => {
     isCompiling = true;
     webpackChanged = true;
     hasErrors = hasWarnings = false;
@@ -80,7 +80,7 @@ function setupBundler(bundler, opts) {
     startTime = new Date().getTime()
   });
 
-  bundler.plugin('done', (stats) => {
+  bundler.hooks.done.tap('dev-terminal', (stats) => {
     const endTime = new Date().getTime()
     let dontClear = false;
     if (!firstRun) {
