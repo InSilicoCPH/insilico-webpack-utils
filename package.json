@@ -19,21 +19,21 @@
     "test": "jest"
   },
   "dependencies": {
-    "chalk": "^2.3.1",
-    "chokidar": "^2.0.2",
+    "chalk": "^2.4.1",
+    "chokidar": "^2.0.3",
     "del": "^3.0.0",
-    "execa": "^0.9.0",
+    "execa": "^0.10.0",
     "jsonfile": "^4.0.0",
     "minimist": "^1.2.0",
     "node-notifier": "^5.2.1",
-    "ora": "^2.0.0",
+    "ora": "^2.1.0",
     "postcss-reporter": "^5.0.0",
-    "react-dev-utils": "^5.0.0",
+    "react-dev-utils": "^5.0.1",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
-    "jest": "^22.4.2",
-    "webpack": "^3.5.5"
+    "jest": "^23.1.0",
+    "webpack": "^4.10.2"
   },
   "peerDependencies": {
     "webpack": ">=3.0.0"

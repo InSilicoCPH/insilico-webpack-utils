@@ -72,15 +72,15 @@ function setupBundler(bundler, opts) {
   }
   webpackBundler = bundler;
 
-  bundler.plugin('invalid', () => {
+  const invalidMethod = () => {
     isCompiling = true;
     webpackChanged = true;
     hasErrors = hasWarnings = false;
     //console.log('Compiling...');
     startTime = new Date().getTime()
-  });
+  };
 
-  bundler.plugin('done', (stats) => {
+  const doneMethod = (stats) => {
     const endTime = new Date().getTime()
     let dontClear = false;
     if (!firstRun) {
@@ -130,7 +130,16 @@ function setupBundler(bundler, opts) {
       console.log();
       webpackMessages.warnings.forEach((message) => console.log(message));
     }
-  });
+  };
+
+  if (webpackBundler.hooks && webpackBundler.hooks.invalid && webpackBundler.hooks.done) {
+    // Use the new Tapable hooks in Webpack 4
+    webpackBundler.hooks.invalid.tap('DevTerminal', invalidMethod)
+    webpackBundler.hooks.done.tap('DevTerminal', doneMethod)
+  } else {
+    bundler.plugin('invalid', invalidMethod)
+    bundler.plugin('done', doneMethod)
+  }
 }
 
 function logOutput(dontClear) {
